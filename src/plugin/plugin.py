@@ -743,7 +743,8 @@ class E2KodiExtServer(UDSServer):
         self.messageIn.put((self.kodiPlayer is not None, json.dumps(statusMessage)))
 
     def handlePlayStopMessage(self, status, data):
-        FBLock(); RCLock()
+        FBLock()
+        RCLock()
         self.messageIn.put((True, None))
 
     def handleSwitchToEnigma2Message(self, status, data):
@@ -760,7 +761,8 @@ class E2KodiExtServer(UDSServer):
             self.logger.error("handlePlayMessage: no data!")
             self.messageIn.put((False, None))
             return
-        FBUnlock(); RCUnlock()
+        FBUnlock()
+        RCUnlock()
 
         setaudio.switch(False,True)
         if getMachineBrand() not in ('Vu+', 'Formuler'):
