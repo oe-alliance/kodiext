@@ -38,6 +38,7 @@ except ImportError:
     class SubsSupport(object):
         def __init__(self, *args, **kwargs):
             pass
+
     class SubsSupportStatus(object):
         def __init__(self, *args, **kwargs):
             pass
@@ -145,6 +146,7 @@ class SetAudio:
             except:
                 pass
 
+
 class SetResolution:
     def __init__(self):
         self.E2res = None
@@ -180,8 +182,10 @@ class SetResolution:
 	self.rate = config.av.videorate[self.E2res].value
 	self.switch(True)
  
+
 setaudio = SetAudio()
 setresolution = SetResolution()
+
 
 def SaveDesktopInfo():
     global _g_dw, _g_dh
@@ -196,13 +200,16 @@ def SaveDesktopInfo():
     os.system('chmod 755 /tmp/dw.info')
     open("/tmp/dw.info", "w").write(str(_g_dw) + "x" + str(_g_dh))
 
+
 SaveDesktopInfo()
+
 
 def esHD():
     if getDesktop(0).size().width() > 1400:
         return True
     else:
         return False
+
 
 def fhd(num, factor=1.5):
     if esHD():
@@ -211,30 +218,37 @@ def fhd(num, factor=1.5):
         prod = num
     return int(round(prod))
 
+
 def FBLock():
     print"[KodiLauncher] FBLock"
     fbClass.getInstance().lock()
+
 
 def FBUnlock():
     print "[KodiLauncher] FBUnlock"
     fbClass.getInstance().unlock()
 
+
 def RCLock():
     print "[KodiLauncher] RCLock"
     eRCInput.getInstance().lock()
+
 
 def RCUnlock():
     print "[KodiLauncher] RCUnlock"
     eRCInput.getInstance().unlock()
 
+
 def kodiStopped(data, retval, extraArgs):
     print '[KodiLauncher] kodi stopped: retval = %d' % retval
+
 
 def kodiResumeStopped(data, retval, extraArgs):
     print '[KodiLauncher] kodi resume script stopped: retval = %d' % retval
     if retval > 0:
         KODI_LAUNCHER.stop()
 #        <eLabel name="" position="1400,1020" size="445,45" text=" " font="RegularHD; 20"  backgroundColor="#001E1C1C"/>
+
 
 class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSupport, InfoBarSeek, InfoBarSubservicesSupport, InfoBarAspectChange, InfoBarAudioSelection, InfoBarNotifications, HelpableScreen, Screen):
     if esHD():
@@ -441,7 +455,6 @@ class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSuppo
 	assert KodiVideoPlayer.instance is None, "class KodiVideoPlayer is a singleton class and just one instance of this class is allowed!"
 	KodiVideoPlayer.instance = self
 
-
         self.onClose.append(boundFunction(self.session.deleteDialog, self.statusScreen))
         self.onClose.append(boundFunction(Notifications.RemovePopup, self.RESUME_POPUP_ID))
         self.onClose.append(self.__timer.stop)
@@ -465,6 +478,7 @@ class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSuppo
 			InfoBarSeek.seekBackManual(self)
 	except:
 		InfoBarSeek.seekBackManual(self)
+
     def __evStart(self):
         if self.__position and self.__firstStart:
             self.__firstStart = False
@@ -510,6 +524,7 @@ class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSuppo
 
     def doEofInternal(self, playing):
         self.close()
+
 
 class Meta(object):
     def __init__(self, meta):
@@ -632,6 +647,7 @@ class Meta(object):
 		f.close()
 
 	return genre
+
 
 class VideoInfoView(Screen):
 	if esHD():
@@ -840,6 +856,7 @@ class E2KodiExtServer(UDSServer):
     def infoview(self):
         SESSION.open(VideoInfoView)
 
+
 class KodiLauncher(Screen):
     if esHD():
         skin = """<screen position="fill" size="1920,1080" backgroundColor="#FF000000" flags="wfNoBorder" title=" "></screen>"""
@@ -902,6 +919,7 @@ class KodiLauncher(Screen):
             pass
         self.close()
 
+
 def autoStart(reason, **kwargs):
     print "[KodiLauncher] autoStart - reason = %d" % reason
     global SERVER_THREAD
@@ -918,6 +936,7 @@ def autoStart(reason, **kwargs):
         SERVER.shutdown()
         SERVER_THREAD.join()
 
+
 def startLauncher(session, **kwargs):
     setaudio.ReadData()
     setaudio.switch(True)
@@ -927,6 +946,7 @@ def startLauncher(session, **kwargs):
     SESSION = session
     global KODI_LAUNCHER
     KODI_LAUNCHER = session.open(KodiLauncher)
+
 
 def Plugins(**kwargs):
     screenwidth = getDesktop(0).size().width()
