@@ -176,12 +176,12 @@ class SetResolution:
         else:
             if self.E2res and self.rate and self.port:
 	    	iAVSwitch.setMode(self.port, self.E2res, self.rate)
-	
+
     def ReadData(self):
         self.E2res = config.av.videomode[self.port].value
 	self.rate = config.av.videorate[self.E2res].value
 	self.switch(True)
- 
+
 
 setaudio = SetAudio()
 setresolution = SetResolution()
@@ -271,7 +271,7 @@ class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSuppo
             <widget source="session.CurrentService" render="Label" position="750,935" size="180,67" zPosition="6" font="RegularHD;32" halign="left"   transparent="1">
                 <convert type="ServicePosition">Position,ShowHours</convert>
             </widget>
-	    <eLabel name="" text="/" position="927,935" size="20,67" zPosition="6" font="RegularHD;32"/> 
+	    <eLabel name="" text="/" position="927,935" size="20,67" zPosition="6" font="RegularHD;32"/>
             <widget source="session.CurrentService" render="Label" position="952,935" size="180,67" zPosition="6" font="RegularHD;32" halign="left"   transparent="1">
                 <convert type="ServicePosition">Length,ShowHours</convert>
             </widget>
@@ -332,7 +332,7 @@ class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSuppo
             <widget source="session.CurrentService" render="Label" position="500,623" size="120,44" zPosition="6" font="Regular;32" halign="left"   transparent="1">
                 <convert type="ServicePosition">Position,ShowHours</convert>
             </widget>
-	    <eLabel name="" text="/" position="618,623" size="13,44" zPosition="6" font="Regular;32"/> 
+	    <eLabel name="" text="/" position="618,623" size="13,44" zPosition="6" font="Regular;32"/>
             <widget source="session.CurrentService" render="Label" position="634,623" size="120,44" zPosition="6" font="Regular;32" halign="left"   transparent="1">
                 <convert type="ServicePosition">Length,ShowHours</convert>
             </widget>
@@ -547,7 +547,7 @@ class Meta(object):
                 except:
                     season = -1
                 if season > 0 and episode > 0:
-                    title += u" S%02dE%02d" % (season, episode) 
+                    title += u" S%02dE%02d" % (season, episode)
                 episodeTitle = vTag.get("title")
                 if episodeTitle:
                     title += u" - " + episodeTitle
@@ -612,7 +612,7 @@ class Meta(object):
 	plot = u''
         vTag = self.meta.get('videoInfoTag')
         if vTag and vTag.get("plot"):
-		plot = u'' + vTag.get("plot")	
+		plot = u'' + vTag.get("plot")
 
 	filename = self.getFilename()
 	if not plot and fileExists(str(filename) + ".spztxt"):
@@ -672,11 +672,11 @@ class VideoInfoView(Screen):
                    <eLabel name="linea" position="13,73" size="740,1" foregroundColor="#40444444" transparent="0" zPosition="20" backgroundColor="#30555555"/>
 		   <widget source="description" position="220,100" size="533,266" font="Regular; 20" render="RunningTextSpa" options="movetype=swimming,startpoint=0,direction=top,steptime=100,repeat=0,always=0,oneshot=0,startdelay=15000,pause=500,backtime=5" noWrap="0"/>
 		</screen>"""
-	
+
 	def __init__(self, session):
 		self.skin = VideoInfoView.skin
 		Screen.__init__(self, session)
-		
+
 		self["genre"] = Label()
 		self["description"] = Label()
 	        # load meta info from json file provided by Kodi Enigma2Player
@@ -699,7 +699,7 @@ class VideoInfoView(Screen):
 			"cancel": self.close,
 			"ok": self.close
 		}, -1)
-		
+
 
 class E2KodiExtRequestHandler(KodiExtRequestHandler):
 
