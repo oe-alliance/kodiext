@@ -73,7 +73,7 @@ class SetAudio:
         self.aac = "passthrough"
         self.aacplus = "passthrough"
 
-    def switch(self,Tokodi=False, Player=False):
+    def switch(self, Tokodi=False, Player=False):
         if Tokodi:
             if Player:
                 self.VolPlayer = self.volctrl.getVolume()
@@ -153,10 +153,10 @@ class SetResolution:
         self.port = config.av.videoport.value
         self.rate = None
         if getMachineBrand() in ('Vu+', 'Formuler'):
-            resolutions = ("720i","720p")
+            resolutions = ("720i", "720p")
         else:
-            resolutions = ("720i","720p","1080i","1080p")
-            rates = ("60Hz","50Hz")
+            resolutions = ("720i", "720p", "1080i", "1080p")
+            rates = ("60Hz", "50Hz")
             for res in resolutions:
                 for rate in rates:
                     try:
@@ -166,11 +166,11 @@ class SetResolution:
                     except:
                         pass
 
-    def switch(self,Tokodi=False, Player=False):
+    def switch(self, Tokodi=False, Player=False):
         if Tokodi:
             if self.kodires and self.kodirate and self.port:
                 iAVSwitch.setMode(self.port, self.kodires, self.kodirate)
-                open("/proc/stb/video/videomode","w").write(self.kodires + self.kodirate.replace("Hz",""))
+                open("/proc/stb/video/videomode", "w").write(self.kodires + self.kodirate.replace("Hz", ""))
         else:
             if self.E2res and self.rate and self.port:
 	    	iAVSwitch.setMode(self.port, self.E2res, self.rate)
@@ -189,8 +189,8 @@ def SaveDesktopInfo():
         _g_dw = getDesktop(0).size().width()
         _g_dh = getDesktop(0).size().height()
     except:
-        _g_dw,_g_dh = 1280,720
-    print "[XBMC] Desktop size [%dx%d]" % (_g_dw,_g_dh)
+        _g_dw, _g_dh = 1280, 720
+    print "[XBMC] Desktop size [%dx%d]" % (_g_dw, _g_dh)
     if not fileExists('/tmp/dw.info'):
         os.system('touch /tmp/dw.info')
     os.system('chmod 755 /tmp/dw.info')
@@ -545,7 +545,7 @@ class Meta(object):
             title = self.meta.get("title")
 	filename = self.getFilename()
 	if not title and fileExists(str(filename) + ".spztxt"):
-		f = open(str(filename) + ".spztxt","r")
+		f = open(str(filename) + ".spztxt", "r")
 		tok = 0
 		for line in f.readlines():
 			idx = line.find("->")
@@ -571,11 +571,11 @@ class Meta(object):
 	image = None
 	listItem = self.meta.get("listItem")
         if listItem:
-		image = listItem.get("CacheThumb","")
-		fanart = listItem.get("Fanart","")
+		image = listItem.get("CacheThumb", "")
+		fanart = listItem.get("Fanart", "")
 		imageweb = ""
 		if fanart:
-			imageweb = fanart.get("thumb","")
+			imageweb = fanart.get("thumb", "")
 
 		if imageweb.startswith("http"):
 			if not fileExists(image):
@@ -601,7 +601,7 @@ class Meta(object):
 
 	filename = self.getFilename()
 	if not plot and fileExists(str(filename) + ".spztxt"):
-		f = open(str(filename) + ".spztxt","r")
+		f = open(str(filename) + ".spztxt", "r")
 		tok = 0
 		for line in f.readlines():
 			idx = line.find("->")
@@ -623,7 +623,7 @@ class Meta(object):
 
 	filename = self.getFilename()
 	if not genre and fileExists(str(filename) + ".spztxt"):
-		f = open(str(filename) + ".spztxt","r")
+		f = open(str(filename) + ".spztxt", "r")
 		for line in f.readlines():
 			if line.split(":")[0] == 'Género':
 				genrestr = u'' + line.split(":")[1][1:]
@@ -764,9 +764,9 @@ class E2KodiExtServer(UDSServer):
         FBUnlock()
         RCUnlock()
 
-        setaudio.switch(False,True)
+        setaudio.switch(False, True)
         if getMachineBrand() not in ('Vu+', 'Formuler'):
-            setresolution.switch(False,True)
+            setresolution.switch(False, True)
         # parse subtitles, play path and service type from data
         sType = 4097
         subtitles = []
@@ -804,7 +804,7 @@ class E2KodiExtServer(UDSServer):
                 meta = {}
 
         # create Kodi player Screen
-        noneFnc = lambda:None
+        noneFnc = lambda: None
         self.kodiPlayer = SESSION.openWithCallback(self.kodiPlayerExitCB, KodiVideoPlayer,
             noneFnc, noneFnc, noneFnc, self.infoview, noneFnc)
 
@@ -830,9 +830,9 @@ class E2KodiExtServer(UDSServer):
         self.messageIn.put((True, None))
 
     def kodiPlayerExitCB(self, callback=None):
-        setaudio.switch(True,True)
+        setaudio.switch(True, True)
         if getMachineBrand() not in ('Vu+', 'Formuler'):
-            setresolution.switch(True,True)
+            setresolution.switch(True, True)
         SESSION.nav.stopService()
         self.kodiPlayer = None
         self.subtitles = []
