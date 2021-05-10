@@ -77,20 +77,20 @@ class SetAudio:
         if Tokodi:
             if Player:
                 self.VolPlayer = self.volctrl.getVolume()
-            vol =100
-            ac3="downmix"
-            dts="downmix"
-            aac="passthrough"
-            aacplus="passthrough"
+            vol = 100
+            ac3 = "downmix"
+            dts = "downmix"
+            aac = "passthrough"
+            aacplus = "passthrough"
         else:
             if Player:
                 vol = self.VolPlayer
             else:
                 vol = self.VolPrev
-            ac3=self.ac3
-            dts=self.dts
-            aac=self.aac
-            aacplus=self.aacplus
+            ac3 = self.ac3
+            dts = self.dts
+            aac = self.aac
+            aacplus = self.aacplus
 
         self.volctrl.setVolume(vol, vol)
 
@@ -170,7 +170,7 @@ class SetResolution:
         if Tokodi:
             if self.kodires and self.kodirate and self.port:
                 iAVSwitch.setMode(self.port, self.kodires, self.kodirate)
-                open("/proc/stb/video/videomode","w").write(self.kodires+self.kodirate.replace("Hz",""))
+                open("/proc/stb/video/videomode","w").write(self.kodires + self.kodirate.replace("Hz",""))
         else:
             if self.E2res and self.rate and self.port:
 	    	iAVSwitch.setMode(self.port, self.E2res, self.rate)
@@ -206,9 +206,9 @@ def esHD():
 
 def fhd(num, factor=1.5):
     if esHD():
-        prod=num*factor
+        prod = num * factor
     else:
-        prod=num
+        prod = num
     return int(round(prod))
 
 def FBLock():
@@ -532,7 +532,7 @@ class Meta(object):
                 except:
                     season = -1
                 if season > 0 and episode > 0:
-                    title += u" S%02dE%02d"%(season, episode) 
+                    title += u" S%02dE%02d" % (season, episode) 
                 episodeTitle = vTag.get("title")
                 if episodeTitle:
                     title += u" - " + episodeTitle
@@ -540,18 +540,18 @@ class Meta(object):
                 title = vTag.get("title") or vTag.get("originaltitle")
                 year = vTag.get("year")
                 if year and title:
-                    title+= u" (" + str(year) + u")"
+                    title += u" (" + str(year) + u")"
         if not title:
             title = self.meta.get("title")
 	filename = self.getFilename()
 	if not title and fileExists(str(filename) + ".spztxt"):
-		f=open(str(filename) + ".spztxt","r")
-		tok=0
+		f = open(str(filename) + ".spztxt","r")
+		tok = 0
 		for line in f.readlines():
-			idx=line.find("->")
+			idx = line.find("->")
 			if idx != -1:
-				if tok==0:
-					title=u''+line[idx+3:]
+				if tok == 0:
+					title = u'' + line[idx + 3:]
 					break
 		f.close()
         if not title:
@@ -601,15 +601,15 @@ class Meta(object):
 
 	filename = self.getFilename()
 	if not plot and fileExists(str(filename) + ".spztxt"):
-		f=open(str(filename) + ".spztxt","r")
-		tok=0
+		f = open(str(filename) + ".spztxt","r")
+		tok = 0
 		for line in f.readlines():
-			idx=line.find("->")
+			idx = line.find("->")
 			if idx != -1:
-				if tok==0:
-					tok=1
-				elif tok==1:
-					plot=u''+line[idx+3:]
+				if tok == 0:
+					tok = 1
+				elif tok == 1:
+					plot = u'' + line[idx + 3:]
 					break
 		f.close()
 
@@ -623,10 +623,10 @@ class Meta(object):
 
 	filename = self.getFilename()
 	if not genre and fileExists(str(filename) + ".spztxt"):
-		f=open(str(filename) + ".spztxt","r")
+		f = open(str(filename) + ".spztxt","r")
 		for line in f.readlines():
-			if line.split(":")[0]=='Género':
-				genrestr=u''+line.split(":")[1][1:]
+			if line.split(":")[0] == 'Género':
+				genrestr = u'' + line.split(":")[1][1:]
 				genre = genrestr.split(" | ")
 				break
 		f.close()
@@ -646,7 +646,7 @@ class VideoInfoView(Screen):
 		   <widget source="description" position="330,150" size="800,400" font="RegularHD; 20" render="RunningTextSpa" options="movetype=swimming,startpoint=0,direction=top,steptime=100,repeat=0,always=0,oneshot=0,startdelay=15000,pause=500,backtime=5" noWrap="0"/>
 		</screen>"""
 	else:
-		skin="""
+		skin = """
 		<screen position="center,center" size="766,400" title="View Video Info" >
                    <widget name="image" position="10,100" size="200,266" alphatest="on" transparent="1"/>
                    <widget source="session.CurrentService" render="Label" position="13,13" size="740,28" zPosition="1"  font="Regular;26" valign="center" halign="left" foregroundColor="#00ffa533" transparent="1">
@@ -662,7 +662,7 @@ class VideoInfoView(Screen):
 		Screen.__init__(self, session)
 		
 		self["genre"] = Label()
-		self["description"]=Label()
+		self["description"] = Label()
 	        # load meta info from json file provided by Kodi Enigma2Player
 	        try:
 	            meta = json.load(open(KODIEXTIN, "r"))
@@ -870,7 +870,7 @@ class KodiLauncher(Screen):
                         kodiProc = p.split()
             if kodiProc is not None:
                 kodiPid = int(kodiProc[0])
-                print "[KodiLauncher] startup: kodi is running, pid = %d , resuming..."% kodiPid
+                print "[KodiLauncher] startup: kodi is running, pid = %d , resuming..." % kodiPid
                 self.resumeKodi(kodiPid)
             else:
                 print "[KodiLauncher] startup: kodi is not running, starting..."
