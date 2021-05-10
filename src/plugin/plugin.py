@@ -435,7 +435,7 @@ class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSuppo
 
         self.eventTracker = ServiceEventTracker(self,
         {
-            iPlayableService.evStart : self.__evStart,
+            iPlayableService.evStart: self.__evStart,
         })
 
 	assert KodiVideoPlayer.instance is None, "class KodiVideoPlayer is a singleton class and just one instance of this class is allowed!"
@@ -895,9 +895,9 @@ class KodiLauncher(Screen):
             self.session.nav.playService(self.previousService)
         try:
             if os.path.exists('/media/hdd/.kodi/'):
-                os.system ('rm -rf /media/hdd/kodi_crashlog*.log')
+                os.system('rm -rf /media/hdd/kodi_crashlog*.log')
             else:
-                os.system ('rm -rf /tmp/kodi/kodi_crashlog*.log')
+                os.system('rm -rf /tmp/kodi/kodi_crashlog*.log')
         except:
             pass
         self.close()
