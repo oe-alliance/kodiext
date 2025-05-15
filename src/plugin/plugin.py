@@ -493,7 +493,7 @@ class KodiVideoPlayer(InfoBarBase, InfoBarShowHide, SubsSupportStatus, SubsSuppo
 		self.session.nav.playService(sref)
 
 	def audioSelection(self):
-		self.session.openWithCallback(self.audioSelected, MyAudioSelection, infobar=self)
+		self.session.open(MyAudioSelection, infobar=self)
 
 	def subtitleSelection(self):
 		from Screens.AudioSelection import SubtitleSelection
