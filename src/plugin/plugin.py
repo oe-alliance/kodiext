@@ -216,7 +216,7 @@ def RCUnlock():
 
 def kodiStopped(data, retval, extraArgs):
 	print(f"[KodiLauncher] kodi stopped: retval = {retval}")
-	#KODI_LAUNCHER.stop()
+	# KODI_LAUNCHER.stop()
 
 
 def kodiResumeStopped(data, retval, extraArgs):
@@ -570,8 +570,7 @@ class Meta(object):
 			fanart = listItem.get("Fanart", "")
 			imageweb = ""
 			if fanart:
-				imageweb = fanart.get("thumb", "")
-
+				imageweb = fanart.get("thumb", "") if isinstance(fanart, dict) else fanart
 			if imageweb.startswith("http"):
 				if not exists(image):
 					image = imageweb
@@ -822,7 +821,7 @@ class E2KodiExtServer(UDSServer):
 		sref.setName(title)
 
 		# set start position if provided
-		#self.kodiPlayer.setStartPosition(Meta(meta).getStartTime())
+		# self.kodiPlayer.setStartPosition(Meta(meta).getStartTime())
 
 		self.kodiPlayer.playService(sref)
 		self.messageIn.put((True, None))
