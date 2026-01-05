@@ -1,6 +1,7 @@
 from base64 import b64encode
 from os.path import isfile, join
-from twisted.web.client import downloadPage
+from requests import get
+from twisted.internet.threads import deferToThread
 
 from Components.AVSwitch import AVSwitch
 from Components.ActionMap import HelpableActionMap
@@ -108,19 +109,31 @@ class WebPixmap(GUIComponent):
 		self.picload.startDecode(filePath)
 
 	def loadFromUrl(self, url, destPath):
-		def loadSuccess(callback=None):
-			self.__currentUrl = destPath
-			self.picload.startDecode(destPath)
+		def _download():
+			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 5.1; rv:1.9.0.2) Gecko/2008091620 Firefox/3.0.2"}
+			try:
+				with get(url, headers=headers, stream=True, timeout=10) as r:
+					r.raise_for_status()
+					with open(destPath, "wb") as f:
+						for chunk in r.iter_content(8192):
+							if chunk:
+								f.write(chunk)
+			except Exception as errMsg:
+				print(f"[e2utils] ERROR in class 'WebPixmap:loadFromUrl': {errMsg}")
+			return destPath
 
-		def loadFailed(failure):
+		def _success(path):
+			self.__currentUrl = path
+			self.picload.startDecode(path)
+
+		def _failure(failure):
 			failure.printException()
 			if self.instance:
 				self.load(self.default)
 
-		agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.0.2) Gecko/2008091620 Firefox/3.0.2"
-		d = downloadPage(url, destPath, agent=agent)
-		d.addCallback(loadSuccess)
-		d.addErrback(loadFailed)
+		d = deferToThread(_download)
+		d.addCallback(_success)
+		d.addErrback(_failure)
 
 	def load(self, url):
 		if self.caching:
